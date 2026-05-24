@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { useState } from "react";
+import { handlePayment } from "../../utils/razorpay";
 import {
   Dialog,
   DialogContent,
@@ -102,6 +103,8 @@ export function IndividualBookDialog({ open, onOpenChange, preSelectedBookId }: 
     }
   }, [preSelectedBookId, open]);
 
+  const [isProcessing, setIsProcessing] = useState(false);
+
   const handleBookSelect = (bookId: string) => {
     setSelectedBook(bookId);
     setShowPreview(false);
@@ -117,8 +120,19 @@ export function IndividualBookDialog({ open, onOpenChange, preSelectedBookId }: 
     setShowPreview(false);
   };
 
+  const handlePaymentClick = async (amount: number) => {
+    if (isProcessing) return;
+    setIsProcessing(true);
+    onOpenChange(false);
+    await new Promise((resolve) => setTimeout(resolve, 120));
+    await handlePayment(amount);
+    setIsProcessing(false);
+  };
+
   const handleSubmit = () => {
-    console.log("Individual book purchase:", selectedBook);
+    if (selectedBookData) {
+      handlePaymentClick(selectedBookData.price * 100); // Convert to paise for Razorpay
+    }
   };
 
   const selectedBookData = books.find((b) => b.id === selectedBook);
@@ -263,11 +277,13 @@ export function IndividualBookDialog({ open, onOpenChange, preSelectedBookId }: 
               {/* Sticky Bottom Buttons (Mobile Only) */}
               <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-3 space-y-2 shadow-lg z-50">
                 <button
-                  onClick={handleSubmit}
+                  type="button"
+                  disabled={isProcessing}
+                  onClick={() => selectedBookData && handlePaymentClick(selectedBookData.price * 100)}
                   className="w-full h-10 rounded-[14px] text-sm bg-gradient-to-r from-[#0066ff] to-[#7c3aed] text-white font-medium
-                    shadow-lg shadow-blue-500/20 transition-all duration-300"
+                    shadow-lg shadow-blue-500/20 transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  Pay Now - ₹{selectedBookData?.price}
+                  {isProcessing ? "Processing..." : `Pay Now - ₹${selectedBookData?.price}`}
                 </button>
                 <button
                   type="button"
@@ -359,12 +375,14 @@ export function IndividualBookDialog({ open, onOpenChange, preSelectedBookId }: 
                   </div>
                   <div className="space-y-2.5 pt-2">
                     <button
-                      onClick={handleSubmit}
+                      type="button"
+                      disabled={isProcessing}
+                      onClick={() => selectedBookData && handlePaymentClick(selectedBookData.price * 100)}
                       className="w-full h-12 rounded-lg text-base bg-gradient-to-r from-[#0066ff] to-[#7c3aed] text-white font-medium
                         shadow-lg shadow-blue-500/20 hover:shadow-xl hover:shadow-blue-500/30
-                        transition-all duration-300"
+                        transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-60"
                     >
-                      Pay Now - ₹{selectedBookData?.price}
+                      {isProcessing ? "Processing..." : `Pay Now - ₹${selectedBookData?.price}`}
                     </button>
                     <button
                       type="button"

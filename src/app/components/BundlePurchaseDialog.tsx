@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { handlePayment } from "../../utils/razorpay";
 import {
   Dialog,
   DialogContent,
@@ -16,8 +17,19 @@ interface BundlePurchaseDialogProps {
 }
 
 export function BundlePurchaseDialog({ open, onOpenChange }: BundlePurchaseDialogProps) {
+  const [isProcessing, setIsProcessing] = useState(false);
+
   const handleSubmit = () => {
     console.log("Bundle purchase initiated");
+  };
+
+  const handlePaymentClick = async (amount: number) => {
+    if (isProcessing) return;
+    setIsProcessing(true);
+    onOpenChange(false);
+    await new Promise((resolve) => setTimeout(resolve, 120));
+    await handlePayment(amount);
+    setIsProcessing(false);
   };
 
   const bundleBooks = [
@@ -82,12 +94,17 @@ export function BundlePurchaseDialog({ open, onOpenChange }: BundlePurchaseDialo
 
         <div className="space-y-2 md:space-y-3 pt-1 md:pt-2">
           <button
-            onClick={handleSubmit}
+            type="button"
+            disabled={isProcessing}
+            onClick={() => {
+  onOpenChange(false);
+  handlePayment(333300);
+}}
             className="w-full h-10 md:h-12 rounded-lg bg-gradient-to-r from-[#0066ff] via-[#5b21b6] to-[#7c3aed] text-white font-bold text-sm md:text-base
               shadow-lg shadow-blue-500/20 hover:shadow-xl hover:shadow-blue-500/30
-              transition-all duration-300"
+              transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            Pay Now - ₹3333
+            {isProcessing ? "Processing..." : "Pay Now - ₹3333"}
           </button>
 
           <button
