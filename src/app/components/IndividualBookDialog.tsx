@@ -112,6 +112,7 @@ export function IndividualBookDialog({ open, onOpenChange, preSelectedBookId, on
   const [buyerEmail, setBuyerEmail] = useState("");
   const [buyerCountry, setBuyerCountry] = useState("");
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
+  const [successDownloadUrl, setSuccessDownloadUrl] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
 
   // Auto-select book when preSelectedBookId is provided
@@ -179,11 +180,12 @@ export function IndividualBookDialog({ open, onOpenChange, preSelectedBookId, on
       await handlePayment(checkoutAmount, {
         prefillName: formData.name,
         onSuccess: async () => {
-          await sendProductEmail({
+          const emailResult = await sendProductEmail({
             name: formData.name,
             email: formData.email,
             productType: selectedProduct,
           });
+          setSuccessDownloadUrl(emailResult.downloadUrl || null);
           setSuccessDialogOpen(true);
         },
       });
@@ -486,6 +488,7 @@ export function IndividualBookDialog({ open, onOpenChange, preSelectedBookId, on
       <PurchaseSuccessDialog
         open={successDialogOpen}
         onOpenChange={setSuccessDialogOpen}
+        downloadUrl={successDownloadUrl}
       />
     </>
   );

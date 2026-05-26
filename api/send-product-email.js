@@ -1,7 +1,5 @@
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const productMap = {
   "ai-exterior-rendering": {
     title: "AI Exterior Rendering",
@@ -41,6 +39,13 @@ export default async function handler(req, res) {
 
     const origin = req.headers.origin || `https://${req.headers.host}`;
     const downloadUrl = `${origin}${product.pdfPath}`;
+
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+      throw new Error("Missing RESEND_API_KEY");
+    }
+
+    const resend = new Resend(apiKey);
 
     const html = `
       <div style="font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #111827;">
@@ -82,9 +87,9 @@ export default async function handler(req, res) {
       html,
     });
 
-    return res.status(200).json({ success: true });
+    return res.status(200).json({ success: true, downloadUrl });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: "Failed to send purchase email" });
+    return res.status(500).json({ error: error instanceof Error ? error.message : "Failed to send purchase email" });
   }
 }

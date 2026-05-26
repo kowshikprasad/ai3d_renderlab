@@ -33,6 +33,7 @@ export function BundlePurchaseDialog({ open, onOpenChange, onPayNowClick }: Bund
   const [buyerEmail, setBuyerEmail] = useState("");
   const [buyerCountry, setBuyerCountry] = useState("");
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
+  const [successDownloadUrl, setSuccessDownloadUrl] = useState<string | null>(null);
 
   const bundleBooks = [
     { title: "Exterior AI Rendering", subtitle: "Complete Workflow Guide", thumbnail: exteriorCover },
@@ -61,11 +62,12 @@ export function BundlePurchaseDialog({ open, onOpenChange, onPayNowClick }: Bund
       await handlePayment(checkoutAmount, {
         prefillName: formData.name,
         onSuccess: async () => {
-          await sendProductEmail({
+          const emailResult = await sendProductEmail({
             name: formData.name,
             email: formData.email,
             productType: selectedProduct,
           });
+          setSuccessDownloadUrl(emailResult.downloadUrl || null);
           setSuccessDialogOpen(true);
         },
       });
@@ -180,6 +182,7 @@ export function BundlePurchaseDialog({ open, onOpenChange, onPayNowClick }: Bund
       <PurchaseSuccessDialog
         open={successDialogOpen}
         onOpenChange={setSuccessDialogOpen}
+        downloadUrl={successDownloadUrl}
       />
     </>
   );
