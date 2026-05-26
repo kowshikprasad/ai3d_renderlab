@@ -60,7 +60,7 @@ export function BeforeAfterSection() {
                     <ReactCompareSliderImage
                       src={item.before}
                       alt="Before"
-                      style={{ objectFit: "cover", height: "280px", userSelect: "none" }}
+                      style={{ objectFit: "cover", height: "280px", userSelect: "none", touchAction: "none" }}
                       className="md:!h-[500px]"
                     />
                   }
@@ -68,12 +68,12 @@ export function BeforeAfterSection() {
                     <ReactCompareSliderImage
                       src={item.after}
                       alt="After"
-                      style={{ objectFit: "cover", height: "280px", userSelect: "none" }}
+                      style={{ objectFit: "cover", height: "280px", userSelect: "none", touchAction: "none" }}
                       className="md:!h-[500px]"
                     />
                   }
-                  position={50}
-                  onlyHandleDraggable={false}
+                  defaultPosition={50}
+                  onlyHandleDraggable={true}
                   changePositionOnHover={false}
                   style={{
                     height: "280px",
@@ -84,9 +84,9 @@ export function BeforeAfterSection() {
                   }}
                   className="md:!h-[500px] md:!rounded-xl"
                   handle={
-                    <div className="relative flex items-center justify-center w-1 h-full cursor-ew-resize">
+                    <div style={{ touchAction: "none" }} className="relative flex items-center justify-center w-1 h-full cursor-ew-resize">
                       <div className="absolute w-1 h-full bg-white/90 backdrop-blur-sm shadow-lg pointer-events-none" />
-                      <div className="absolute w-12 h-12 md:w-10 md:h-10 rounded-full bg-gradient-to-r from-[#0066ff] to-[#7c3aed] shadow-xl flex items-center justify-center touch-manipulation">
+                      <div className="absolute w-12 h-12 md:w-10 md:h-10 rounded-full bg-gradient-to-r from-[#0066ff] to-[#7c3aed] shadow-xl flex items-center justify-center">
                         <div className="flex gap-1 pointer-events-none">
                           <div className="w-0.5 h-4 md:h-4 bg-white" />
                           <div className="w-0.5 h-4 md:h-4 bg-white" />
