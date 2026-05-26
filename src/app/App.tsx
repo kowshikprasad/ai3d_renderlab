@@ -4,6 +4,7 @@ import { PlayfulStatementSection } from "./components/PlayfulStatementSection";
 import { EbooksSection } from "./components/EbooksSection";
 import { BookCoversShowcase } from "./components/BookCoversShowcase";
 import { BundleSection } from "./components/BundleSection";
+import { WorkflowComparisonSection } from "./components/WorkflowComparisonSection";
 import { BeforeAfterSection } from "./components/BeforeAfterSection";
 import { PresentationImpactSection } from "./components/PresentationImpactSection";
 import { CreatedByArchitectsSection } from "./components/CreatedByArchitectsSection";
@@ -20,6 +21,7 @@ export default function App() {
       <EbooksSection />
       <BookCoversShowcase />
       <BundleSection />
+      <WorkflowComparisonSection />
       <BeforeAfterSection />
       <PresentationImpactSection />
       <CreatedByArchitectsSection />

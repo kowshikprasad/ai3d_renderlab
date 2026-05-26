@@ -6,7 +6,11 @@ import { GlassCard } from "./GlassCard";
 import { BundlePurchaseDialog } from "./BundlePurchaseDialog";
 import { IndividualBookDialog } from "./IndividualBookDialog";
 
-export function HeroSection() {
+interface HeroSectionProps {
+  onPayNowClick?: (price: string) => void;
+}
+
+export function HeroSection({ onPayNowClick }: HeroSectionProps) {
   const [bundleDialogOpen, setBundleDialogOpen] = useState(false);
   const [individualDialogOpen, setIndividualDialogOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -220,8 +224,8 @@ export function HeroSection() {
         )}
       </section>
 
-      <BundlePurchaseDialog open={bundleDialogOpen} onOpenChange={setBundleDialogOpen} />
-      <IndividualBookDialog open={individualDialogOpen} onOpenChange={setIndividualDialogOpen} />
+      <BundlePurchaseDialog open={bundleDialogOpen} onOpenChange={setBundleDialogOpen} onPayNowClick={onPayNowClick} />
+      <IndividualBookDialog open={individualDialogOpen} onOpenChange={setIndividualDialogOpen} onPayNowClick={onPayNowClick} />
     </>
   );
 }

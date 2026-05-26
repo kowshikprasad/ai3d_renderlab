@@ -9,7 +9,11 @@ import interiorCover from "../../imports/image-6.png";
 import presentationCover from "../../imports/image-7.png";
 import thumbnailExterior from "../../imports/Thumbnail_exterior.png";
 
-export function EbooksSection() {
+interface EbooksSectionProps {
+  onPayNowClick?: (price: string) => void;
+}
+
+export function EbooksSection({ onPayNowClick }: EbooksSectionProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedBookId, setSelectedBookId] = useState<string | null>(null);
 
@@ -150,6 +154,7 @@ export function EbooksSection() {
         open={dialogOpen}
         onOpenChange={setDialogOpen}
         preSelectedBookId={selectedBookId}
+        onPayNowClick={onPayNowClick}
       />
     </>
   );

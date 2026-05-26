@@ -7,7 +7,11 @@ import { GlassCard } from "./GlassCard";
 import { BundlePurchaseDialog } from "./BundlePurchaseDialog";
 import { IndividualBookDialog } from "./IndividualBookDialog";
 
-export function FinalCTASection() {
+interface FinalCTASectionProps {
+  onPayNowClick?: (price: string) => void;
+}
+
+export function FinalCTASection({ onPayNowClick }: FinalCTASectionProps) {
   const [bundleDialogOpen, setBundleDialogOpen] = useState(false);
   const [individualDialogOpen, setIndividualDialogOpen] = useState(false);
 
@@ -88,8 +92,8 @@ export function FinalCTASection() {
         </div>
       </section>
 
-      <BundlePurchaseDialog open={bundleDialogOpen} onOpenChange={setBundleDialogOpen} />
-      <IndividualBookDialog open={individualDialogOpen} onOpenChange={setIndividualDialogOpen} />
+      <BundlePurchaseDialog open={bundleDialogOpen} onOpenChange={setBundleDialogOpen} onPayNowClick={onPayNowClick} />
+      <IndividualBookDialog open={individualDialogOpen} onOpenChange={setIndividualDialogOpen} onPayNowClick={onPayNowClick} />
     </>
   );
 }

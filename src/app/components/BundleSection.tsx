@@ -7,7 +7,11 @@ import { GlassCard } from "./GlassCard";
 import { BundlePurchaseDialog } from "./BundlePurchaseDialog";
 import bookCover from "../../imports/THE_ULTIMATE_AI-RENDERING_PRO_BUNDLE.png";
 
-export function BundleSection() {
+interface BundleSectionProps {
+  onPayNowClick?: (price: string) => void;
+}
+
+export function BundleSection({ onPayNowClick }: BundleSectionProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const includes = [
@@ -182,7 +186,7 @@ export function BundleSection() {
         </div>
       </section>
 
-      <BundlePurchaseDialog open={dialogOpen} onOpenChange={setDialogOpen} />
+      <BundlePurchaseDialog open={dialogOpen} onOpenChange={setDialogOpen} onPayNowClick={onPayNowClick} />
     </>
   );
 }

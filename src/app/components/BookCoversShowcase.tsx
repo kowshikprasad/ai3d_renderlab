@@ -5,7 +5,11 @@ import { motion } from "motion/react";
 import { IndividualBookDialog } from "./IndividualBookDialog";
 import bookCover from "../../imports/image-1.png";
 
-export function BookCoversShowcase() {
+interface BookCoversShowcaseProps {
+  onPayNowClick?: (price: string) => void;
+}
+
+export function BookCoversShowcase({ onPayNowClick }: BookCoversShowcaseProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedBookId, setSelectedBookId] = useState<string | null>(null);
 
@@ -58,6 +62,19 @@ export function BookCoversShowcase() {
               transition={{ duration: 0.6 }}
               className="space-y-3 md:space-y-4"
             >
+              {/* Floating Pill Tag */}
+              <div className="flex justify-center mb-3">
+                <div
+                  className="inline-flex items-center px-5 py-2.5 rounded-full bg-gradient-to-r from-emerald-500 to-green-600 text-white font-semibold text-sm md:text-base tracking-wide shadow-lg"
+                  style={{
+                    boxShadow: "0 0 20px rgba(16, 185, 129, 0.4), 0 4px 12px rgba(0, 0, 0, 0.15)",
+                    filter: "drop-shadow(0 0 8px rgba(16, 185, 129, 0.3))"
+                  }}
+                >
+                  No Hidden Charges
+                </div>
+              </div>
+
               <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold tracking-tight text-[#1a1a1a]">
                 Premium AI Rendering Collection
               </h2>
@@ -145,6 +162,7 @@ export function BookCoversShowcase() {
         open={dialogOpen}
         onOpenChange={setDialogOpen}
         preSelectedBookId={selectedBookId}
+        onPayNowClick={onPayNowClick}
       />
     </>
   );
