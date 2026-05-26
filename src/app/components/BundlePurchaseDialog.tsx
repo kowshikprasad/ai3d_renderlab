@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { handlePayment } from "../../utils/razorpay";
+import { CheckoutDialog } from "./CheckoutDialog";
 import {
   Dialog,
   DialogContent,
@@ -18,17 +19,26 @@ interface BundlePurchaseDialogProps {
 
 export function BundlePurchaseDialog({ open, onOpenChange }: BundlePurchaseDialogProps) {
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [checkoutAmount, setCheckoutAmount] = useState(0);
+  const [checkoutPriceLabel, setCheckoutPriceLabel] = useState("₹3333");
 
   const handleSubmit = () => {
     console.log("Bundle purchase initiated");
   };
 
-  const handlePaymentClick = async (amount: number) => {
+  const openCheckout = (amount: number, priceLabel: string) => {
     if (isProcessing) return;
-    setIsProcessing(true);
     onOpenChange(false);
-    await new Promise((resolve) => setTimeout(resolve, 120));
-    await handlePayment(amount);
+    setCheckoutAmount(amount);
+    setCheckoutPriceLabel(priceLabel);
+    setTimeout(() => setIsCheckoutOpen(true), 120);
+  };
+
+  const handleCheckoutContinue = async (_formData: { name: string; country: string; email: string }) => {
+    setIsCheckoutOpen(false);
+    setIsProcessing(true);
+    await handlePayment(checkoutAmount);
     setIsProcessing(false);
   };
 
@@ -39,8 +49,9 @@ export function BundlePurchaseDialog({ open, onOpenChange }: BundlePurchaseDialo
   ];
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[600px] max-h-[85vh] overflow-y-auto backdrop-blur-xl bg-white/95 border border-white/40 shadow-[0_12px_48px_rgba(0,0,0,0.15)]">
+    <>
+      <Dialog open={open} onOpenChange={onOpenChange}>
+        <DialogContent className="sm:max-w-[600px] max-h-[85vh] overflow-y-auto backdrop-blur-xl bg-white/95 border border-white/40 shadow-[0_12px_48px_rgba(0,0,0,0.15)]">
         <DialogHeader>
           <DialogTitle className="text-lg md:text-xl font-bold text-center mb-1 md:mb-2">
             Get The Complete Bundle
@@ -96,10 +107,7 @@ export function BundlePurchaseDialog({ open, onOpenChange }: BundlePurchaseDialo
           <button
             type="button"
             disabled={isProcessing}
-            onClick={() => {
-  onOpenChange(false);
-  handlePayment(333300);
-}}
+            onClick={() => openCheckout(333300, "₹3333")}
             className="w-full h-10 md:h-12 rounded-lg bg-gradient-to-r from-[#0066ff] via-[#5b21b6] to-[#7c3aed] text-white font-bold text-sm md:text-base
               shadow-lg shadow-blue-500/20 hover:shadow-xl hover:shadow-blue-500/30
               transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-60"
@@ -122,5 +130,13 @@ export function BundlePurchaseDialog({ open, onOpenChange }: BundlePurchaseDialo
         </p>
       </DialogContent>
     </Dialog>
+
+      <CheckoutDialog
+        isOpen={isCheckoutOpen}
+        onClose={() => setIsCheckoutOpen(false)}
+        price={checkoutPriceLabel}
+        onContinue={handleCheckoutContinue}
+      />
+    </>
   );
 }

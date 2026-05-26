@@ -10,6 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "./ui/dialog";
+import { CheckoutDialog } from "./CheckoutDialog";
 import { GlassCard } from "./GlassCard";
 import { motion } from "motion/react";
 import exteriorCover from "../../imports/EXTERIOR__AI_-_RENDERING_overview.jpg";
@@ -93,6 +94,9 @@ const books: Book[] = [
 export function IndividualBookDialog({ open, onOpenChange, preSelectedBookId }: IndividualBookDialogProps) {
   const [selectedBook, setSelectedBook] = useState<string | null>(null);
   const [showPreview, setShowPreview] = useState(false);
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [checkoutAmount, setCheckoutAmount] = useState(0);
+  const [checkoutPriceLabel, setCheckoutPriceLabel] = useState("");
 
   // Auto-select book when preSelectedBookId is provided
   React.useEffect(() => {
@@ -120,26 +124,27 @@ export function IndividualBookDialog({ open, onOpenChange, preSelectedBookId }: 
     setShowPreview(false);
   };
 
-  const handlePaymentClick = async (amount: number) => {
+  const openCheckout = (amount: number, priceLabel: string) => {
     if (isProcessing) return;
-    setIsProcessing(true);
     onOpenChange(false);
-    await new Promise((resolve) => setTimeout(resolve, 120));
-    await handlePayment(amount);
-    setIsProcessing(false);
+    setCheckoutAmount(amount);
+    setCheckoutPriceLabel(priceLabel);
+    setTimeout(() => setIsCheckoutOpen(true), 120);
   };
 
-  const handleSubmit = () => {
-    if (selectedBookData) {
-      handlePaymentClick(selectedBookData.price * 100); // Convert to paise for Razorpay
-    }
+  const handleCheckoutContinue = async (_formData: { name: string; country: string; email: string }) => {
+    setIsCheckoutOpen(false);
+    setIsProcessing(true);
+    await handlePayment(checkoutAmount);
+    setIsProcessing(false);
   };
 
   const selectedBookData = books.find((b) => b.id === selectedBook);
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-full h-full sm:h-auto sm:max-w-[900px] backdrop-blur-xl bg-white/95 border-0 sm:border border-white/40 shadow-[0_12px_48px_rgba(0,0,0,0.15)] max-h-screen sm:max-h-[85vh] overflow-hidden p-0 sm:rounded-lg">
+    <>
+      <Dialog open={open} onOpenChange={onOpenChange}>
+        <DialogContent className="w-full h-full sm:h-auto sm:max-w-[900px] backdrop-blur-xl bg-white/95 border-0 sm:border border-white/40 shadow-[0_12px_48px_rgba(0,0,0,0.15)] max-h-screen sm:max-h-[85vh] overflow-hidden p-0 sm:rounded-lg">
         {!selectedBook ? (
           <div className="pt-[70px] pb-[70px] px-3 sm:p-6 overflow-y-auto max-h-screen sm:max-h-[85vh]">
             <DialogHeader>
@@ -279,7 +284,7 @@ export function IndividualBookDialog({ open, onOpenChange, preSelectedBookId }: 
                 <button
                   type="button"
                   disabled={isProcessing}
-                  onClick={() => selectedBookData && handlePaymentClick(selectedBookData.price * 100)}
+                  onClick={() => selectedBookData && openCheckout(selectedBookData.price * 100, `₹${selectedBookData.price}`)}
                   className="w-full h-10 rounded-[14px] text-sm bg-gradient-to-r from-[#0066ff] to-[#7c3aed] text-white font-medium
                     shadow-lg shadow-blue-500/20 transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-60"
                 >
@@ -377,7 +382,7 @@ export function IndividualBookDialog({ open, onOpenChange, preSelectedBookId }: 
                     <button
                       type="button"
                       disabled={isProcessing}
-                      onClick={() => selectedBookData && handlePaymentClick(selectedBookData.price * 100)}
+                      onClick={() => selectedBookData && openCheckout(selectedBookData.price * 100, `₹${selectedBookData.price}`)}
                       className="w-full h-12 rounded-lg text-base bg-gradient-to-r from-[#0066ff] to-[#7c3aed] text-white font-medium
                         shadow-lg shadow-blue-500/20 hover:shadow-xl hover:shadow-blue-500/30
                         transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-60"
@@ -404,5 +409,14 @@ export function IndividualBookDialog({ open, onOpenChange, preSelectedBookId }: 
         )}
       </DialogContent>
     </Dialog>
+
+    <CheckoutDialog
+      isOpen={isCheckoutOpen}
+      onClose={() => setIsCheckoutOpen(false)}
+      price={checkoutPriceLabel}
+      onContinue={handleCheckoutContinue}
+    />
+
+    </>
   );
 }
