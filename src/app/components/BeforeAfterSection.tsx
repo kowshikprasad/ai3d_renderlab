@@ -2,33 +2,41 @@
 
 import {
   ReactCompareSlider,
-  ReactCompareSliderImage
+  ReactCompareSliderImage,
 } from "react-compare-slider";
+
 import { GlassCard } from "./GlassCard";
 
 export function BeforeAfterSection() {
   const interactiveTransformations = [
     {
-      before: "https://images.unsplash.com/photo-1771189255245-225dcea3f652?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcmNoaXRlY3R1cmFsJTIwbW9kZWwlMjBwcmVzZW50YXRpb258ZW58MXx8fHwxNzc5MjQwNzcxfDA&ixlib=rb-4.1.0&q=80&w=1080",
-      after: "https://images.unsplash.com/photo-1650656746868-f01c722a0d8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBhcmNoaXRlY3R1cmUlMjBidWlsZGluZyUyMGNpbmVtYXRpY3xlbnwxfHx8fDE3NzkyNDA3NzB8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      label: "SketchUp → Photoreal Render"
+      before:
+        "https://images.unsplash.com/photo-1771189255245-225dcea3f652?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+      after:
+        "https://images.unsplash.com/photo-1650656746868-f01c722a0d8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+      label: "SketchUp → Photoreal Render",
     },
     {
-      before: "https://images.unsplash.com/photo-1716077521105-f0d699ab2047?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjByZXNpZGVudGlhbCUyMGFyY2hpdGVjdHVyZSUyMHJlbmRlcnxlbnwxfHx8fDE3NzkyNDA3NzB8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      after: "https://images.unsplash.com/photo-1762337009787-bad651efb880?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBtb2Rlcm4lMjBhcmNoaXRlY3R1cmUlMjBleHRlcmlvciUyMG5pZ2h0fGVufDF8fHx8MTc3OTI0MDc2OXww&ixlib=rb-4.1.0&q=80&w=1080",
-      label: "Day → Night"
-    }
+      before:
+        "https://images.unsplash.com/photo-1716077521105-f0d699ab2047?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+      after:
+        "https://images.unsplash.com/photo-1762337009787-bad651efb880?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+      label: "Day → Night",
+    },
   ];
 
   const staticTransformation = {
-    before: "https://images.unsplash.com/photo-1765253807334-26938639c9d7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtaW5pbWFsaXN0JTIwaW50ZXJpb3IlMjBhcmNoaXRlY3R1cmFsJTIwcmVuZGVyaW5nfGVufDF8fHx8MTc3OTI0MDc3MHww&ixlib=rb-4.1.0&q=80&w=1080",
-    after: "https://images.unsplash.com/photo-1765862835193-3c37388a409e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcmNoaXRlY3R1cmFsJTIwdmlzdWFsaXphdGlvbiUyMGludGVyaW9yJTIwbHV4dXJ5fGVufDF8fHx8MTc3OTI0MDc3MXww&ixlib=rb-4.1.0&q=80&w=1080",
-    label: "Moodboard → Interior Visualization"
+    before:
+      "https://images.unsplash.com/photo-1765253807334-26938639c9d7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+    after:
+      "https://images.unsplash.com/photo-1765862835193-3c37388a409e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+    label: "Moodboard → Interior Visualization",
   };
 
   return (
     <section className="relative py-16 md:py-24 px-4 md:px-6 bg-white">
       <div className="max-w-7xl mx-auto">
+        {/* Heading */}
         <div className="text-center mb-8 md:mb-16">
           <h2 className="text-[28px] md:text-6xl font-bold tracking-tight mb-3 md:mb-6 text-[#1a1a1a] leading-tight">
             Before / After
@@ -37,13 +45,14 @@ export function BeforeAfterSection() {
               Transformations
             </span>
           </h2>
+
           <p className="text-sm md:text-xl text-[#404040] max-w-2xl mx-auto px-2">
             See how professional AI workflows elevate architectural visualization
           </p>
         </div>
 
         <div className="space-y-6 md:space-y-12">
-          {/* Interactive Before/After Sliders */}
+          {/* Interactive Sliders */}
           {interactiveTransformations.map((item, i) => (
             <GlassCard key={i} className="p-4 md:p-6 overflow-hidden">
               {/* Label */}
@@ -53,56 +62,66 @@ export function BeforeAfterSection() {
                 </span>
               </div>
 
-              {/* Interactive Slider */}
-              <div className="relative rounded-lg md:rounded-xl overflow-hidden touch-pan-x">
+              {/* Slider */}
+              <div className="relative overflow-hidden rounded-xl">
                 <ReactCompareSlider
+                  position={50}
+                  style={{
+                    width: "100%",
+                    height: "280px",
+                    borderRadius: "16px",
+                  }}
+                  className="md:!h-[500px]"
+
                   itemOne={
                     <ReactCompareSliderImage
                       src={item.before}
                       alt="Before"
-                      style={{ objectFit: "cover", height: "280px", userSelect: "none", touchAction: "none" }}
-                      className="md:!h-[500px]"
+                      style={{
+                        objectFit: "cover",
+                        width: "100%",
+                        height: "100%",
+                      }}
                     />
                   }
+
                   itemTwo={
                     <ReactCompareSliderImage
                       src={item.after}
                       alt="After"
-                      style={{ objectFit: "cover", height: "280px", userSelect: "none", touchAction: "none" }}
-                      className="md:!h-[500px]"
+                      style={{
+                        objectFit: "cover",
+                        width: "100%",
+                        height: "100%",
+                      }}
                     />
                   }
-                  defaultPosition={50}
-                  onlyHandleDraggable={true}
-                  changePositionOnHover={false}
-                  style={{
-                    height: "280px",
-                    borderRadius: "0.5rem",
-                    userSelect: "none",
-                    WebkitUserSelect: "none",
-                    touchAction: "pan-x"
-                  }}
-                  className="md:!h-[500px] md:!rounded-xl"
+
                   handle={
-                    <div style={{ touchAction: "none" }} className="relative flex items-center justify-center w-1 h-full cursor-ew-resize">
-                      <div className="absolute w-1 h-full bg-white/90 backdrop-blur-sm shadow-lg pointer-events-none" />
-                      <div className="absolute w-12 h-12 md:w-10 md:h-10 rounded-full bg-gradient-to-r from-[#0066ff] to-[#7c3aed] shadow-xl flex items-center justify-center">
-                        <div className="flex gap-1 pointer-events-none">
-                          <div className="w-0.5 h-4 md:h-4 bg-white" />
-                          <div className="w-0.5 h-4 md:h-4 bg-white" />
+                    <div className="relative flex items-center justify-center h-full w-10 cursor-ew-resize">
+                      {/* Line */}
+                      <div className="absolute h-full w-[2px] bg-white shadow-lg" />
+
+                      {/* Circle */}
+                      <div className="z-10 flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-r from-[#0066ff] to-[#7c3aed] shadow-2xl border-2 border-white">
+                        <div className="flex gap-1">
+                          <div className="w-[2px] h-4 bg-white rounded-full" />
+                          <div className="w-[2px] h-4 bg-white rounded-full" />
                         </div>
                       </div>
                     </div>
                   }
                 />
 
-                {/* Labels */}
-                <div className="absolute bottom-3 md:bottom-6 left-3 md:left-6">
+                {/* Before Badge */}
+                <div className="absolute bottom-3 md:bottom-6 left-3 md:left-6 z-20">
                   <span className="backdrop-blur-md bg-white/80 border border-white/60 rounded-md md:rounded-lg px-2.5 md:px-4 py-1 md:py-2 text-[10px] md:text-sm font-bold text-[#1a1a1a]">
                     BEFORE
                   </span>
                 </div>
-                <div className="absolute bottom-3 md:bottom-6 right-3 md:right-6">
+
+                {/* After Badge */}
+                <div className="absolute bottom-3 md:bottom-6 right-3 md:right-6 z-20">
                   <span className="bg-gradient-to-r from-[#0066ff] to-[#7c3aed] rounded-md md:rounded-lg px-2.5 md:px-4 py-1 md:py-2 text-[10px] md:text-sm font-bold text-white shadow-lg">
                     AFTER
                   </span>
@@ -120,13 +139,16 @@ export function BeforeAfterSection() {
             </div>
 
             <div className="grid md:grid-cols-2 gap-3 md:gap-6">
-              <div className="relative group overflow-hidden rounded-lg md:rounded-xl">
+              {/* Before */}
+              <div className="relative group overflow-hidden rounded-xl">
                 <img
                   src={staticTransformation.before}
                   alt="Before"
-                  className="w-full h-[200px] md:h-[400px] object-cover group-hover:scale-105 transition-transform duration-700"
+                  className="w-full h-[220px] md:h-[400px] object-cover transition-transform duration-700 group-hover:scale-105"
                 />
+
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+
                 <div className="absolute bottom-3 md:bottom-6 left-3 md:left-6">
                   <span className="backdrop-blur-md bg-white/80 border border-white/60 rounded-md md:rounded-lg px-2.5 md:px-4 py-1 md:py-2 text-[10px] md:text-sm font-bold text-[#1a1a1a]">
                     BEFORE
@@ -134,13 +156,16 @@ export function BeforeAfterSection() {
                 </div>
               </div>
 
-              <div className="relative group overflow-hidden rounded-lg md:rounded-xl">
+              {/* After */}
+              <div className="relative group overflow-hidden rounded-xl">
                 <img
                   src={staticTransformation.after}
                   alt="After"
-                  className="w-full h-[200px] md:h-[400px] object-cover group-hover:scale-105 transition-transform duration-700"
+                  className="w-full h-[220px] md:h-[400px] object-cover transition-transform duration-700 group-hover:scale-105"
                 />
+
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+
                 <div className="absolute bottom-3 md:bottom-6 left-3 md:left-6">
                   <span className="bg-gradient-to-r from-[#0066ff] to-[#7c3aed] rounded-md md:rounded-lg px-2.5 md:px-4 py-1 md:py-2 text-[10px] md:text-sm font-bold text-white shadow-lg">
                     AFTER
