@@ -2,7 +2,8 @@
 
 import * as React from "react";
 import { useState } from "react";
-import { handlePayment } from "../../utils/razorpay";
+import { handlePayment } from "../../utils/razorpay.ts";
+import { sendProductEmail } from "../../utils/sendProductEmail";
 import {
   Dialog,
   DialogContent,
@@ -13,6 +14,7 @@ import {
 import { CheckoutDialog } from "./CheckoutDialog";
 import { GlassCard } from "./GlassCard";
 import { motion } from "motion/react";
+import { PurchaseSuccessDialog } from "./PurchaseSuccessDialog";
 import exterior1 from "../../imports/exterior1.webp";
 import exterior2 from "../../imports/exterior2.webp";
 import exterior3 from "../../imports/exterior3.webp";
@@ -104,6 +106,12 @@ export function IndividualBookDialog({ open, onOpenChange, preSelectedBookId, on
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [checkoutAmount, setCheckoutAmount] = useState(0);
   const [checkoutPriceLabel, setCheckoutPriceLabel] = useState("");
+  const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
+  const [selectedAmount, setSelectedAmount] = useState<number>(0);
+  const [buyerName, setBuyerName] = useState("");
+  const [buyerEmail, setBuyerEmail] = useState("");
+  const [buyerCountry, setBuyerCountry] = useState("");
+  const [successDialogOpen, setSuccessDialogOpen] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
 
   // Auto-select book when preSelectedBookId is provided
@@ -132,19 +140,59 @@ export function IndividualBookDialog({ open, onOpenChange, preSelectedBookId, on
 
   const selectedBookData = books.find((b) => b.id === selectedBook);
 
+  const getProductType = (bookId: string | null) => {
+    switch (bookId) {
+      case "exterior":
+        return "ai-exterior-rendering";
+      case "interior":
+        return "ai-interior-rendering";
+      case "presentation":
+      default:
+        return "ai-design-presentation";
+    }
+  };
+
   const openCheckout = (amount: number, priceLabel: string) => {
     if (isProcessing) return;
     onOpenChange(false);
+    const productType = getProductType(selectedBook);
+    setSelectedProduct(productType);
+    setSelectedAmount(amount);
     setCheckoutAmount(amount);
     setCheckoutPriceLabel(priceLabel);
     setTimeout(() => setIsCheckoutOpen(true), 120);
   };
 
-  const handleCheckoutContinue = async (_formData: { name: string; country: string; email: string }) => {
+  const handleCheckoutContinue = async (formData: { name: string; country: string; email: string }) => {
+    if (!selectedProduct) {
+      alert("Product selection is missing. Please try again.");
+      return;
+    }
+
+    setBuyerName(formData.name);
+    setBuyerEmail(formData.email);
+    setBuyerCountry(formData.country);
     setIsCheckoutOpen(false);
     setIsProcessing(true);
-    await handlePayment(checkoutAmount);
-    setIsProcessing(false);
+
+    try {
+      await handlePayment(checkoutAmount, {
+        prefillName: formData.name,
+        onSuccess: async () => {
+          await sendProductEmail({
+            name: formData.name,
+            email: formData.email,
+            productType: selectedProduct,
+          });
+          setSuccessDialogOpen(true);
+        },
+      });
+    } catch (error) {
+      console.error(error);
+      alert("Payment or delivery failed. Please try again.");
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   const handlePayNow = () => {
@@ -433,6 +481,11 @@ export function IndividualBookDialog({ open, onOpenChange, preSelectedBookId, on
         onClose={() => setIsCheckoutOpen(false)}
         price={checkoutPriceLabel}
         onContinue={handleCheckoutContinue}
+      />
+
+      <PurchaseSuccessDialog
+        open={successDialogOpen}
+        onOpenChange={setSuccessDialogOpen}
       />
     </>
   );

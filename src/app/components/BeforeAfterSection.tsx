@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import {
   ReactCompareSlider,
   ReactCompareSliderImage,
@@ -14,6 +15,33 @@ import interiorImage from "../../imports/interior.webp";
 import { GlassCard } from "./GlassCard";
 
 export function BeforeAfterSection() {
+  const [sliderPositions, setSliderPositions] = useState([20, 20]);
+  const sliderDirections = useRef([1, 1]);
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setSliderPositions((prev) =>
+        prev.map((position, index) => {
+          const direction = sliderDirections.current[index];
+          let nextPosition = position + direction * 0.35;
+
+          if (nextPosition >= 80) {
+            sliderDirections.current[index] = -1;
+            nextPosition = 80;
+          }
+          if (nextPosition <= 20) {
+            sliderDirections.current[index] = 1;
+            nextPosition = 20;
+          }
+
+          return nextPosition;
+        })
+      );
+    }, 50);
+
+    return () => window.clearInterval(interval);
+  }, []);
+
   const interactiveTransformations = [
     {
       before: sketchupImage,
@@ -65,7 +93,7 @@ export function BeforeAfterSection() {
               {/* Slider */}
               <div className="relative overflow-hidden rounded-xl">
                 <ReactCompareSlider
-                  position={50}
+                  position={sliderPositions[i]}
                   style={{
                     width: "100%",
                     height: "280px",

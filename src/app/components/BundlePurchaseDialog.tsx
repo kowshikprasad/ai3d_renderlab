@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import { handlePayment } from "../../utils/razorpay";
+import { sendProductEmail } from "../../utils/sendProductEmail";
 import { CheckoutDialog } from "./CheckoutDialog";
+import { PurchaseSuccessDialog } from "./PurchaseSuccessDialog";
 import {
   Dialog,
   DialogContent,
@@ -23,8 +25,14 @@ interface BundlePurchaseDialogProps {
 export function BundlePurchaseDialog({ open, onOpenChange, onPayNowClick }: BundlePurchaseDialogProps) {
   const [isProcessing, setIsProcessing] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
-  const [checkoutAmount, setCheckoutAmount] = useState(0);
+  const [checkoutAmount, setCheckoutAmount] = useState(333300);
   const [checkoutPriceLabel, setCheckoutPriceLabel] = useState("₹3333");
+  const [selectedProduct, setSelectedProduct] = useState("ultimate-ai-rendering-pro-bundle");
+  const [selectedAmount, setSelectedAmount] = useState(333300);
+  const [buyerName, setBuyerName] = useState("");
+  const [buyerEmail, setBuyerEmail] = useState("");
+  const [buyerCountry, setBuyerCountry] = useState("");
+  const [successDialogOpen, setSuccessDialogOpen] = useState(false);
 
   const bundleBooks = [
     { title: "Exterior AI Rendering", subtitle: "Complete Workflow Guide", thumbnail: exteriorCover },
@@ -35,16 +43,38 @@ export function BundlePurchaseDialog({ open, onOpenChange, onPayNowClick }: Bund
   const openCheckout = (amount: number, priceLabel: string) => {
     if (isProcessing) return;
     onOpenChange(false);
+    setSelectedProduct("ultimate-ai-rendering-pro-bundle");
+    setSelectedAmount(amount);
     setCheckoutAmount(amount);
     setCheckoutPriceLabel(priceLabel);
     setTimeout(() => setIsCheckoutOpen(true), 120);
   };
 
-  const handleCheckoutContinue = async (_formData: { name: string; country: string; email: string }) => {
+  const handleCheckoutContinue = async (formData: { name: string; country: string; email: string }) => {
+    setBuyerName(formData.name);
+    setBuyerEmail(formData.email);
+    setBuyerCountry(formData.country);
     setIsCheckoutOpen(false);
     setIsProcessing(true);
-    await handlePayment(checkoutAmount);
-    setIsProcessing(false);
+
+    try {
+      await handlePayment(checkoutAmount, {
+        prefillName: formData.name,
+        onSuccess: async () => {
+          await sendProductEmail({
+            name: formData.name,
+            email: formData.email,
+            productType: selectedProduct,
+          });
+          setSuccessDialogOpen(true);
+        },
+      });
+    } catch (error) {
+      console.error(error);
+      alert("Payment or delivery failed. Please try again.");
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   const handleSubmit = () => {
@@ -145,6 +175,11 @@ export function BundlePurchaseDialog({ open, onOpenChange, onPayNowClick }: Bund
         onClose={() => setIsCheckoutOpen(false)}
         price={checkoutPriceLabel}
         onContinue={handleCheckoutContinue}
+      />
+
+      <PurchaseSuccessDialog
+        open={successDialogOpen}
+        onOpenChange={setSuccessDialogOpen}
       />
     </>
   );
