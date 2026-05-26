@@ -5,6 +5,11 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { GlassCard } from "./GlassCard";
 import { BundlePurchaseDialog } from "./BundlePurchaseDialog";
 import { IndividualBookDialog } from "./IndividualBookDialog";
+import H1 from "../../imports/H1.webp";
+import H2 from "../../imports/H2.webp";
+import H3 from "../../imports/H3.webp";
+import H4 from "../../imports/H4.webp";
+import H5 from "../../imports/H5.webp";
 
 interface HeroSectionProps {
   onPayNowClick?: (price: string) => void;
@@ -17,11 +22,11 @@ export function HeroSection({ onPayNowClick }: HeroSectionProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const images = [
-    "https://images.unsplash.com/photo-1768934727097-546ae3c68190?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBhcmNoaXRlY3R1cmUlMjBidWlsZGluZyUyMGV4dGVyaW9yJTIwY2luZW1hdGljfGVufDF8fHx8MTc3OTI0Mjg1Mnww&ixlib=rb-4.1.0&q=80&w=1080",
-    "https://images.unsplash.com/photo-1681216868987-b7268753b81c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBhcmNoaXRlY3R1cmUlMjBleHRlcmlvcnxlbnwxfHx8fDE3NzkyNDI5MzF8MA&ixlib=rb-4.1.0&q=80&w=1080",
-    "https://images.unsplash.com/photo-1672927936377-97d1be3976cd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBpbnRlcmlvciUyMGRlc2lnbiUyMG1vZGVybnxlbnwxfHx8fDE3NzkyNDI5MzR8MA&ixlib=rb-4.1.0&q=80&w=1080",
-    "https://images.unsplash.com/photo-1569534108101-c29c57e3df89?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcmNoaXRlY3R1cmFsJTIwcHJlc2VudGF0aW9uJTIwYm9hcmR8ZW58MXx8fHwxNzc5MjQyOTM0fDA&ixlib=rb-4.1.0&q=80&w=1080",
-    "https://images.unsplash.com/photo-1650656746868-f01c722a0d8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBhcmNoaXRlY3R1cmUlMjBidWlsZGluZyUyMGNpbmVtYXRpY3xlbnwxfHx8fDE3NzkyNDA3NzB8MA&ixlib=rb-4.1.0&q=80&w=1080"
+    H1,
+    H2,
+    H3,
+    H4,
+    H5
   ];
 
   const handleScroll = () => {

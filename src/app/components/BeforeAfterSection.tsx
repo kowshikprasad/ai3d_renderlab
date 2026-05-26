@@ -5,31 +5,31 @@ import {
   ReactCompareSliderImage,
 } from "react-compare-slider";
 
+import sketchupImage from "../../imports/sketchup.webp";
+import renderImage from "../../imports/render.webp";
+import dayImage from "../../imports/day.webp";
+import nightImage from "../../imports/night.webp";
+import moodboardImage from "../../imports/moodboard.webp";
+import interiorImage from "../../imports/interior.webp";
 import { GlassCard } from "./GlassCard";
 
 export function BeforeAfterSection() {
   const interactiveTransformations = [
     {
-      before:
-        "https://images.unsplash.com/photo-1771189255245-225dcea3f652?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-      after:
-        "https://images.unsplash.com/photo-1650656746868-f01c722a0d8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+      before: sketchupImage,
+      after: renderImage,
       label: "SketchUp → Photoreal Render",
     },
     {
-      before:
-        "https://images.unsplash.com/photo-1716077521105-f0d699ab2047?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-      after:
-        "https://images.unsplash.com/photo-1762337009787-bad651efb880?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+      before: dayImage,
+      after: nightImage,
       label: "Day → Night",
     },
   ];
 
   const staticTransformation = {
-    before:
-      "https://images.unsplash.com/photo-1765253807334-26938639c9d7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-    after:
-      "https://images.unsplash.com/photo-1765862835193-3c37388a409e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+    before: moodboardImage,
+    after: interiorImage,
     label: "Moodboard → Interior Visualization",
   };
 

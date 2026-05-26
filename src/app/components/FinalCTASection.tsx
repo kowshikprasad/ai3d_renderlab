@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Shield, Zap, Download, Users } from "lucide-react";
 import { motion } from "motion/react";
+import footerImage from "../../imports/footer.webp";
 import { GlassCard } from "./GlassCard";
 import { BundlePurchaseDialog } from "./BundlePurchaseDialog";
 import { IndividualBookDialog } from "./IndividualBookDialog";
@@ -21,7 +22,7 @@ export function FinalCTASection({ onPayNowClick }: FinalCTASectionProps) {
         {/* Cinematic Background */}
         <div className="absolute inset-0">
           <img
-            src="https://images.unsplash.com/photo-1604503245604-930a6f3513ef?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBhcmNoaXRlY3R1cmUlMjBleHRlcmlvciUyMGJyaWdodHxlbnwxfHx8fDE3NzkyNDMxNjd8MA&ixlib=rb-4.1.0&q=80&w=1080"
+            src={footerImage}
             alt="Premium architecture"
             className="w-full h-full object-cover"
           />

@@ -3,7 +3,10 @@
 import { useState } from "react";
 import { motion } from "motion/react";
 import { IndividualBookDialog } from "./IndividualBookDialog";
-import bookCover from "../../imports/image-1.png";
+import exteriorCover from "../../imports/exterior-cover.webp";
+import interiorCover from "../../imports/interior-cover.webp";
+import designCover from "../../imports/design-cover.webp";
+import bundleCover from "../../imports/bundle-cover.webp";
 
 interface BookCoversShowcaseProps {
   onPayNowClick?: (price: string) => void;
@@ -18,24 +21,28 @@ export function BookCoversShowcase({ onPayNowClick }: BookCoversShowcaseProps) {
       id: "exterior",
       title: "Exterior AI Rendering",
       subtitle: "Workflow Guide",
+      thumbnail: exteriorCover,
       isBundle: false
     },
     {
       id: "interior",
       title: "Interior AI Rendering",
       subtitle: "Workflow Guide",
+      thumbnail: interiorCover,
       isBundle: false
     },
     {
       id: "presentation",
       title: "Design Presentation AI",
       subtitle: "Workflow Guide",
+      thumbnail: designCover,
       isBundle: false
     },
     {
       id: "bundle",
       title: "Ultimate Bundle",
       subtitle: "Complete System",
+      thumbnail: bundleCover,
       isBundle: true
     }
   ];
@@ -121,7 +128,7 @@ export function BookCoversShowcase({ onPayNowClick }: BookCoversShowcaseProps) {
                     } : undefined}
                   >
                     <img
-                      src={bookCover}
+                      src={book.thumbnail}
                       alt={book.title}
                       className="w-full h-full object-cover"
                     />

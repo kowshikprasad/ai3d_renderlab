@@ -13,9 +13,15 @@ import {
 import { CheckoutDialog } from "./CheckoutDialog";
 import { GlassCard } from "./GlassCard";
 import { motion } from "motion/react";
-import exteriorCover from "../../imports/EXTERIOR__AI_-_RENDERING_overview.jpg";
-import exteriorPreview1 from "../../imports/1-EXTERIOR.jpg";
-import exteriorPreview2 from "../../imports/1-EXTERIOR__1_.jpg";
+import exterior1 from "../../imports/exterior1.webp";
+import exterior2 from "../../imports/exterior2.webp";
+import exterior3 from "../../imports/exterior3.webp";
+import interior1 from "../../imports/interior1.webp";
+import interior2 from "../../imports/interior2.webp";
+import interior3 from "../../imports/interior3.webp";
+import design1 from "../../imports/design1.webp";
+import design2 from "../../imports/design2.webp";
+import design3 from "../../imports/design3.webp";
 
 interface IndividualBookDialogProps {
   open: boolean;
@@ -49,10 +55,10 @@ const books: Book[] = [
       "Camera angle control",
     ],
     previewImages: [
-      exteriorCover,
-      exteriorPreview1
+      exterior2,
+      exterior3,
     ],
-    heroImage: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&h=675&fit=crop"
+    heroImage: exterior1
   },
   {
     id: "interior",
@@ -67,10 +73,10 @@ const books: Book[] = [
       "Cinematic interiors",
     ],
     previewImages: [
-      "https://images.unsplash.com/photo-1672927936377-97d1be3976cd?w=400",
-      "https://images.unsplash.com/photo-1765862835193-3c37388a409e?w=400"
+      interior2,
+      interior3,
     ],
-    heroImage: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&h=675&fit=crop"
+    heroImage: interior1
   },
   {
     id: "presentation",
@@ -85,10 +91,10 @@ const books: Book[] = [
       "Floor plan rendering",
     ],
     previewImages: [
-      "https://images.unsplash.com/photo-1569534108101-c29c57e3df89?w=400",
-      "https://images.unsplash.com/photo-1771189255245-225dcea3f652?w=400"
+      design2,
+      design3,
     ],
-    heroImage: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1200&h=675&fit=crop"
+    heroImage: design1
   },
 ];
 

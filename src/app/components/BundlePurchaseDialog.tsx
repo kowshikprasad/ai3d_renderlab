@@ -10,7 +10,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from "./ui/dialog";
-import bookCover from "../../imports/THE_ULTIMATE_AI-RENDERING_PRO_BUNDLE.png";
+import exteriorCover from "../../imports/exterior-cover.webp";
+import interiorCover from "../../imports/interior-cover.webp";
+import designCover from "../../imports/design-cover.webp";
 
 interface BundlePurchaseDialogProps {
   open: boolean;
@@ -25,9 +27,9 @@ export function BundlePurchaseDialog({ open, onOpenChange, onPayNowClick }: Bund
   const [checkoutPriceLabel, setCheckoutPriceLabel] = useState("₹3333");
 
   const bundleBooks = [
-    { title: "Exterior AI Rendering", subtitle: "Complete Workflow Guide" },
-    { title: "Interior AI Rendering", subtitle: "Complete Workflow Guide" },
-    { title: "Design Presentation AI", subtitle: "Complete Workflow Guide" }
+    { title: "Exterior AI Rendering", subtitle: "Complete Workflow Guide", thumbnail: exteriorCover },
+    { title: "Interior AI Rendering", subtitle: "Complete Workflow Guide", thumbnail: interiorCover },
+    { title: "Design Presentation AI", subtitle: "Complete Workflow Guide", thumbnail: designCover }
   ];
 
   const openCheckout = (amount: number, priceLabel: string) => {
@@ -77,7 +79,7 @@ export function BundlePurchaseDialog({ open, onOpenChange, onPayNowClick }: Bund
               >
                 <div className="w-14 h-16 md:w-20 md:h-24 flex-shrink-0 rounded overflow-hidden shadow-md">
                   <img
-                    src={bookCover}
+                    src={book.thumbnail}
                     alt={book.title}
                     className="w-full h-full object-cover"
                   />

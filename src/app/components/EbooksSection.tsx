@@ -7,7 +7,9 @@ import { IndividualBookDialog } from "./IndividualBookDialog";
 import exteriorCover from "../../imports/EXTERIOR__AI_-_RENDERING_overview.jpg";
 import interiorCover from "../../imports/image-6.png";
 import presentationCover from "../../imports/image-7.png";
-import thumbnailExterior from "../../imports/Thumbnail_exterior.png";
+import exteriorThumbnail from "../../imports/exterior thumbnail.webp";
+import interiorThumbnail from "../../imports/interior thumbnail.webp";
+import designThumbnail from "../../imports/design thumbnail.webp";
 
 interface EbooksSectionProps {
   onPayNowClick?: (price: string) => void;
@@ -22,6 +24,7 @@ export function EbooksSection({ onPayNowClick }: EbooksSectionProps) {
       id: "exterior",
       title: "Exterior AI Rendering",
       image: exteriorCover,
+      thumbnail: exteriorThumbnail,
       caseStudy: true,
       features: [
         "Photoreal exterior rendering",
@@ -36,6 +39,7 @@ export function EbooksSection({ onPayNowClick }: EbooksSectionProps) {
       id: "interior",
       title: "Interior AI Rendering",
       image: interiorCover,
+      thumbnail: interiorThumbnail,
       caseStudy: true,
       features: [
         "Mood lighting systems",
@@ -50,6 +54,7 @@ export function EbooksSection({ onPayNowClick }: EbooksSectionProps) {
       id: "presentation",
       title: "Design Presentation AI",
       image: presentationCover,
+      thumbnail: designThumbnail,
       caseStudy: false,
       features: [
         "Architectural boards",
@@ -92,7 +97,7 @@ export function EbooksSection({ onPayNowClick }: EbooksSectionProps) {
                 {/* Book Cover Image - Square Format */}
                 <div className="relative aspect-square overflow-hidden">
                   <img
-                    src={thumbnailExterior}
+                    src={book.thumbnail}
                     alt={book.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
