@@ -80,16 +80,18 @@ export default async function handler(req, res) {
       </div>
     `;
 
-    await resend.emails.send({
-      from: "onboarding@resend.dev",
-      to: email,
-      subject: `Your ${product.title} Download`,
-      html,
-    });
+    const response = await resend.emails.send({
+  from: "AI3D Renderlab <noreply@airenderlab.katviz.com>",
+  to: email,
+  subject: `Your ${product.title} Download`,
+  html,
+});
+
+console.log("EMAIL SENT SUCCESSFULLY:", response);
 
     return res.status(200).json({ success: true, downloadUrl });
   } catch (error) {
-    console.error(error);
+   console.error("EMAIL SEND ERROR:", error);
     return res.status(500).json({ error: error instanceof Error ? error.message : "Failed to send purchase email" });
   }
 }
