@@ -7,6 +7,8 @@ export async function sendProductEmail({
   email: string;
   productType: string;
 }) {
+  console.log(`[Client] Requesting email delivery for ${productType} to ${email}`);
+  
   const response = await fetch("/api/send-product-email", {
     method: "POST",
     headers: {
@@ -17,8 +19,12 @@ export async function sendProductEmail({
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => null);
-    throw new Error(errorData?.error || "Failed to send purchase email.");
+    const error = errorData?.error || `HTTP ${response.status}`;
+    console.error(`[Client] Email delivery failed: ${error}`);
+    throw new Error(error || "Failed to send purchase email.");
   }
 
-  return response.json();
+  const result = await response.json();
+  console.log(`[Client] Email delivery succeeded`);
+  return result;
 }

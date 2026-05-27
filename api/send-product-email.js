@@ -81,7 +81,7 @@ export default async function handler(req, res) {
     `;
 
     await resend.emails.send({
-      from: "AI 3D Renderlab <no-reply@renderlab.ai>",
+      from: "onboarding@resend.dev",
       to: email,
       subject: `Your ${product.title} Download`,
       html,
