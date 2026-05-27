@@ -11,7 +11,7 @@ export const handlePayment = async (
   return new Promise<any>((resolve, reject) => {
     try {
       const options = {
-        key: "rzp_test_SszNI0FL4wMfMA",
+        key: "rzp_live_SuWqtuTcCTJAiD",
         amount,
         currency: "INR",
         name: "AI 3D Renderlab",
