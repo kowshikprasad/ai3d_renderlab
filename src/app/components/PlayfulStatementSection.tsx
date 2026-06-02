@@ -184,6 +184,32 @@ export function PlayfulStatementSection() {
               </p>
             </div>
           </motion.div>
+
+          <div className="max-w-[360px] mx-auto pt-8 md:max-w-none">
+            <div className="overflow-hidden rounded-[32px] border border-slate-200/70 bg-black shadow-lg shadow-slate-900/10">
+              {/* Mobile: portrait-only (shorts link) */}
+              <div className="relative w-full aspect-[9/16] md:hidden">
+                <iframe
+                  className="absolute inset-0 h-full w-full"
+                  src="https://www.youtube.com/embed/4R3w4APFgzE?rel=0&modestbranding=1"
+                  title="AI Rendering Workflow Short Mobile"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+
+              {/* Desktop: landscape only */}
+              <div className="relative w-full hidden md:block md:aspect-video">
+                <iframe
+                  className="absolute inset-0 h-full w-full"
+                  src="https://www.youtube.com/embed/C9VAKaxZuJ4?rel=0&modestbranding=1"
+                  title="AI Rendering Workflow Short Desktop"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>
