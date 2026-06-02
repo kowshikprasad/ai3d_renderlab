@@ -6,8 +6,8 @@ import { GlassCard } from "./GlassCard";
 import { BundlePurchaseDialog } from "./BundlePurchaseDialog";
 import { IndividualBookDialog } from "./IndividualBookDialog";
 import H1 from "../../imports/H1.webp";
-import H2 from "../../imports/H2.webp";
-import H3 from "../../imports/H3.webp";
+import H2 from "../../imports/H2.png";
+import H3 from "../../imports/H3.png";
 import H4 from "../../imports/H4.webp";
 import H5 from "../../imports/H5.webp";
 

@@ -11,6 +11,11 @@ import dayImage from "../../imports/day.webp";
 import nightImage from "../../imports/night.webp";
 import moodboardImage from "../../imports/moodboard.webp";
 import interiorImage from "../../imports/interior.webp";
+import R1 from "../../imports/R1.png";
+import R2 from "../../imports/R2.jpeg";
+import R3 from "../../imports/R3.png";
+import R4 from "../../imports/R4.png";
+import R5 from "../../imports/R5.png";
 import { GlassCard } from "./GlassCard";
 
 export function BeforeAfterSection() {
@@ -66,11 +71,11 @@ export function BeforeAfterSection() {
               <div className="relative overflow-hidden rounded-xl">
                 <ReactCompareSlider
                   defaultPosition={20}
+                  onlyHandleDraggable={false}
                   style={{
                     width: "100%",
                     height: "280px",
                     borderRadius: "16px",
-                    touchAction: "none",
                   }}
                   className="md:!h-[500px]"
 
@@ -173,6 +178,27 @@ export function BeforeAfterSection() {
                   </span>
                 </div>
               </div>
+            </div>
+          </GlassCard>
+
+          {/* R1-R5 vertical stack */}
+          <GlassCard className="p-4 md:p-6">
+            <div className="space-y-4">
+              {[
+                { src: R1, alt: "R1" },
+                { src: R2, alt: "R2" },
+                { src: R3, alt: "R3" },
+                { src: R4, alt: "R4" },
+                { src: R5, alt: "R5" },
+              ].map((image, index) => (
+                <div key={index} className="relative overflow-hidden rounded-xl bg-slate-100 aspect-[16/9]">
+                  <img
+                    src={image.src}
+                    alt={image.alt}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                </div>
+              ))}
             </div>
           </GlassCard>
         </div>
